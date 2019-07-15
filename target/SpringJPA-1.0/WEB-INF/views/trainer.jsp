@@ -38,8 +38,8 @@
 			<td>${trainer.firstName}</td>
 			<td>${trainer.lastName}</td>
                         <td>${trainer.subject}</td>
-			<td><a href="<c:url value='/update/${trainer.trainerId}' />">Update</a></td>
-			<td><a href="<c:url value='/delete${trainer.trainerId}' />">Delete</a></td>
+			<td><a href="/SpringJPA/trainers/update/${trainer.trainerId}"/>Update</a></td>
+			<td><a href="/SpringJPA/trainers/delete/${trainer.trainerId}">Delete</a></td>
 			</tr>
 		</c:forEach>
                         </tbody>

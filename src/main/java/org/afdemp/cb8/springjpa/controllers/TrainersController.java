@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/trainers")
 public class TrainersController {
+
     Trainerservice ts = new Trainerservice();
 
 //	@RequestMapping(method = RequestMethod.GET)
@@ -22,78 +23,67 @@ public class TrainersController {
 //		model.addAttribute("greeting", "Hello World from Spring 4 MVC");
 //		return "index";
 //	}
-    
     //get all trainers
-        @RequestMapping(method = RequestMethod.GET)
-	public String getAllTrainers(ModelMap model) {
-            model.addAttribute("greeting", ts.listtrainers());
-		return "trainer";
-	}
-        
-        //delete trainer
-       @RequestMapping(value = { "/delete/{id}/trainer" }, method = RequestMethod.GET)
-	public String deleteEmployee(@PathVariable Integer id) {
-		ts.deleteTrainerById(id);
-		return "redirect:/list";
-	}
-    
+    @RequestMapping(method = RequestMethod.GET)
+    public String getAllTrainers(ModelMap model) {
+        model.addAttribute("greeting", ts.listtrainers());
+        return "trainer";
+    }
 
-        //update trainer
-	@RequestMapping(value = {"/update/{id}"}, method = RequestMethod.GET)
-	public String editTrainer(ModelMap model, @PathVariable Integer id) {
-            Trainer tr = ts.findTrainerById(id);
-               
-		model.addAttribute("trainer", tr);
-		model.addAttribute("edit", true);
-		return "registration";
-	}
+    //delete trainer
+    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.GET)
+    public String deleteTrainer(@PathVariable Integer id, ModelMap model) {
+        Trainer trainer = new Trainer();
+        ts.deleteTrainerById(id);
         
-        @RequestMapping(value = { "/editt/{id}" }, method = RequestMethod.POST)
-	public String updateTrainer(@Valid Trainer trainer, BindingResult result,
-			 ModelMap model, @PathVariable Integer id) {
+        model.addAttribute("success", "Trainer deleted successfully");
+        return "success";
+        
+    }
 
-		if (result.hasErrors()) {
-			return "registration";
-		}
-               ts.updateTrainer(trainer);
-		
+    //update trainer
+    @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.GET)
+    public String editTrainer(@PathVariable Integer id, ModelMap model) {
+        Trainer tr = ts.findTrainerById(id);
 
-		model.addAttribute("success", "Trainer " + trainer.getFirstName() + " updated successfully");
-		return "success";
-	}
-        
-        
-        
-        
-        //insert a trainer
-        @RequestMapping(value = { "/new" }, method = RequestMethod.GET)
-	public String insert(ModelMap model) {
-		Trainer trainer = new Trainer();
-		model.addAttribute("trainer", trainer);
-		model.addAttribute("edit", false);
-		return "registration";
-	}
-        
-    @RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-	public String saveTrainer(@Valid Trainer trainer, BindingResult result,
-			ModelMap model) {
+        model.addAttribute("trainer", tr);
+        model.addAttribute("edit", false);
+        return "registration";
+    }
 
-		if (result.hasErrors()) {
-			return "registration";
-		}
-	ts.saveTrainer(trainer);
-      model.addAttribute("success", "Trainer " + trainer.getFirstName() + " registered successfully");
-		return "success";
-        
+    @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.POST)
+    public String updateTrainer(@Valid Trainer trainer, BindingResult result,
+            ModelMap model, @PathVariable Integer id) {
+
+        if (result.hasErrors()) {
+            return "registration";
         }
-        
-        
-        
-       
-}
+        ts.updateTrainer(trainer);
 
-        
-        
-        
-        
-        
+        model.addAttribute("success", "Trainer " + trainer.getFirstName() + " updated successfully");
+        return "success";
+    }
+
+    //insert a trainer
+    @RequestMapping(value = {"/new"}, method = RequestMethod.GET)
+    public String insert(ModelMap model) {
+        Trainer trainer = new Trainer();
+        model.addAttribute("trainer", trainer);
+        model.addAttribute("edit", false);
+        return "registration";
+    }
+
+    @RequestMapping(value = {"/new"}, method = RequestMethod.POST)
+    public String saveTrainer(@Valid Trainer trainer, BindingResult result,
+            ModelMap model) {
+
+        if (result.hasErrors()) {
+            return "registration";
+        }
+        ts.saveTrainer(trainer);
+        model.addAttribute("success", "Trainer " + trainer.getFirstName() + " registered successfully");
+        return "success";
+
+    }
+
+}

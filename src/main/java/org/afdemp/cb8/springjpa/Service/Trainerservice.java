@@ -24,30 +24,21 @@ public class Trainerservice {
      return trd.listtrainers();
      }
      
-     public boolean deleteTrainerById(Integer id){
+     public void deleteTrainerById(Integer id){
          trd.deleteTrainerById(id);
-         return false;
+         //return false;
      }
      
      public Trainer findTrainerById(Integer id){
      return trd.findTrainerById(id);
      }
      
-     public void updateTrainer(Trainer trainer){
-     Trainer tr = trd.findTrainerById(trainer.getTrainerId());
-     if(tr != null){
-     tr.setFirstName(trainer.getFirstName());
-      tr.setLastName(trainer.getLastName());
-      tr.setSubject(trainer.getSubject());
-     }
-     
-     }
-     
      public void saveTrainer(Trainer trainer) {
 		trd.saveTrainer(trainer);
 	}
      
-     
-     
+     public void updateTrainer(Trainer trainer){
+     trd.updateTrainer(trainer);
+     }
     
 }

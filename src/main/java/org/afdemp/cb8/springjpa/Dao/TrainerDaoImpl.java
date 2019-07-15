@@ -36,29 +36,25 @@ public class TrainerDaoImpl implements TrainerDao{
         catch(Exception e){
         e.printStackTrace();
         }
-        finally{
-        em.close();
-        emf.close();
-        }
+        
     return trainer;
     }
     
     
-     public boolean deleteTrainerById(Integer id){
-     EntityManager em = emf.createEntityManager();
-     em.getTransaction().begin();
-     
-     try{
-         System.out.println(em.createNamedQuery("Trainer.deleteById").setParameter("trainerId", id).executeUpdate());
-         em.getTransaction().commit();
-     }
-     catch(Exception e){
-         System.out.println("Exception");
-     }
-           finally{  
-         em.close();}
-         return false;
-     }
+//     public boolean deleteTrainerById(Integer id){
+//     EntityManager em = emf.createEntityManager();
+//     em.getTransaction().begin();
+//     
+//     try{
+//         System.out.println(em.createNamedQuery("Trainer.deleteById").setParameter("trainerId", id).executeUpdate());
+//         em.getTransaction().commit();
+//     }
+//     catch(Exception e){
+//         System.out.println("Exception");
+//     }
+//          
+//         return false;
+//     }
     
     public void createTrainer(Trainer trainer){
          EntityManager em = emf.createEntityManager();
@@ -71,9 +67,41 @@ em.getTransaction().begin();
 em.persist(trainer);
 em.getTransaction().commit();
 }
+
+
+  public void updateTrainer(Trainer trainer){
+         EntityManager em = emf.createEntityManager();
+        
+     Trainer entity = em.find(Trainer.class, trainer.getTrainerId());
+     
+     if(entity != null){
+          em.getTransaction().begin();
+     entity.setFirstName(trainer.getFirstName());
+      entity.setLastName(trainer.getLastName());
+      entity.setSubject(trainer.getSubject());
+       em.getTransaction().commit();
+     }
+   
+     
+     }
+  
+  public void deleteTrainerById(Integer id){
+  EntityManager em = emf.createEntityManager();
+     em.getTransaction().begin();
+     
+     try{
+         System.out.println(em.createNamedQuery("Trainer.deleteById").setParameter("trainerId", id).executeUpdate());
+         em.getTransaction().commit();
+     }
+     catch(Exception e){
+         System.out.println("Exception");
+     }
+         
+     }
+  }
     
      
-}
+
     
     
     

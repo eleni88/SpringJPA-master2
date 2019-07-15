@@ -15,8 +15,8 @@ import org.afdemp.cb8.springjpa.entities.Trainer;
 public interface TrainerDao {
     public List<Trainer> listtrainers();
     public void createTrainer(Trainer trainer);
-   //public Trainer updateTrainer(Trainer trainer);
-    public boolean deleteTrainerById(Integer id);
+   public void updateTrainer(Trainer trainer);
+    public void deleteTrainerById(Integer id);
    // public void deleteTrainer(Trainer trainer);
     public Trainer findTrainerById(Integer id);
     public void saveTrainer(Trainer trainer); 
